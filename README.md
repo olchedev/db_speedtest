@@ -1,10 +1,6 @@
 # DataBase SpeedTest
 
-Compares CRUD operations speed for hive, sqflight and drift data bases.
-
-- [hive](https://pub.dev/packages/hive)
-- [sqflite](https://pub.dev/packages/sqflite)
-- [drift](https://pub.dev/packages/drift)
+Compares CRUD operations speed for [hive](https://pub.dev/packages/hive), [sqflite](https://pub.dev/packages/sqflite) and [drift](https://pub.dev/packages/drift) data bases.
 
 # Project Requirements
 
