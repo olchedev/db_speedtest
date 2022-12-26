@@ -1,16 +1,12 @@
-# db_speed
+# DataBase SpeedTest
 
-A new Flutter project.
+Compares CRUD operations speed for hive, sqflight and drift data bases.
 
-## Getting Started
+- [hive](https://pub.dev/packages/hive)
+- [sqflite](https://pub.dev/packages/sqflite)
+- [drift](https://pub.dev/packages/drift)
 
-This project is a starting point for a Flutter application.
+# Project Requirements
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Flutter: 3.3.0
+- Dart: 2.18.0
