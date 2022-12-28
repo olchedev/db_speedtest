@@ -21,6 +21,13 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: ButtonStyle(
+            fixedSize: MaterialStateProperty.all<Size>(
+              const Size(150.0, 50.0),
+            ),
+          ),
+        ),
       ),
       home: const PickDBView(),
     );

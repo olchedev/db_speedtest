@@ -1,3 +1,4 @@
+import 'package:db_speed/screens/test_db_speed_view.dart';
 import 'package:flutter/material.dart';
 
 class PickDBView extends StatelessWidget {
@@ -17,21 +18,45 @@ class PickDBView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const TestDBSpeedView(
+                        dbName: 'Hive',
+                      ),
+                    ),
+                  );
+                },
                 child: const Text('Hive'),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const TestDBSpeedView(
+                        dbName: 'Sqflite',
+                      ),
+                    ),
+                  );
+                },
                 child: const Text('Sqflite'),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const TestDBSpeedView(
+                        dbName: 'Drift',
+                      ),
+                    ),
+                  );
+                },
                 child: const Text('Drift'),
               ),
             ),
