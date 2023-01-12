@@ -1,40 +1,61 @@
-import 'package:db_speed/db/abstract_db.dart';
+import 'package:db_speed/db/db_interface.dart';
 import 'package:hive/hive.dart';
 
-class HiveDB extends AbstractDB {
+class HiveDB implements DBInterface {
   HiveDB._();
 
   static final HiveDB _instance = HiveDB._();
 
   static HiveDB get instance => _instance;
 
-  final _box = Hive.box('userBox');
+  // static Box getTableByName({required String tableName}) {
+  //   return Hive.box(tableName);
+  // }
 
   @override
-  void create() {
-    _box.put('user', {
-      'name': 'Tiffany',
-      'age': 24,
-      'email': 'test@gmail.com',
+  void createTable({required String tableName}) async {
+    await Hive.openBox(tableName);
+  }
+
+  // @override
+  // getTableByName({required String tableName}) {
+  //   return Hive.box(tableName);
+  // }
+
+  @override
+  void insert({
+    // required dbInstance,
+    required String tableName,
+    required Map values,
+  }) {
+    Box table = Hive.box(tableName);
+    values.forEach((key, value) {
+      table.put(key, value);
     });
   }
 
   @override
-  void delete() {
-    _box.delete('user');
+  void read({
+    required dbInstance,
+    required String table,
+  }) {
+    dbInstance.get(table);
   }
 
   @override
-  void read() {
-    _box.get('user');
+  void update({
+    required dbInstance,
+    required String table,
+    required Map values,
+  }) {
+    dbInstance.put(table, values);
   }
 
   @override
-  void update() {
-    _box.put('user', {
-      'name': 'Tom',
-      'age': 24,
-      'email': 'test@gmail.com',
-    });
+  void delete({
+    required dbInstance,
+    required String table,
+  }) {
+    dbInstance.delete(table);
   }
 }

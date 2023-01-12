@@ -1,7 +1,10 @@
-import 'package:db_speed/screens/pick_db_view.dart';
+import 'package:db_speed/screens/select_db_view.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
   runApp(const MyApp());
 }
 
@@ -29,7 +32,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const PickDBView(),
+      home: const SelectDBView(),
     );
   }
 }

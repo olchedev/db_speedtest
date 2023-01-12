@@ -1,19 +1,20 @@
-import 'package:db_speed/db/abstract_db.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:db_speed/db/db_interface.dart';
 
-class SqlflightDB extends AbstractDB {
+class SqlflightDB implements DBInterface {
   SqlflightDB._();
 
   static final SqlflightDB _instance = SqlflightDB._();
 
   static SqlflightDB get instance => _instance;
 
-  Future<Database> openDB() async {
-    Database database = await openDatabase(
-      'user.db',
+  @override
+  void createTable({required String tableName}) async {
+    await openDatabase(
+      tableName,
       onCreate: (Database db, int version) async {
         await db.execute(
-          'CREATE TABLE User ('
+          'CREATE TABLE $tableName ('
           'id INTEGER PRIMARY KEY, '
           'name TEXT, '
           'age INTEGER, '
@@ -22,45 +23,59 @@ class SqlflightDB extends AbstractDB {
         );
       },
     );
-
-    return database;
   }
 
   @override
-  void create() async {
-    final db = await openDB();
-    await db.transaction(
-      (txn) async {
-        await txn.rawInsert(
-          'INSERT INTO User(name, age, email) '
-          'VALUES("Tiffany", 24, test@gmail.com)',
-        );
-      },
+  getTableByName({required String tableName}) {
+    // TODO: implement getTableByName
+    throw UnimplementedError();
+  }
+
+  @override
+  void insert({
+    // required dbInstance,
+    required tableName,
+    required Map values,
+  }) async {
+    // await dbInstance.transaction(
+    //   (txn) async {
+    //     await txn.rawInsert(
+    //       "INSERT INTO $tableName(${values.keys}) "
+    //       'VALUES(${values.values})',
+    //     );
+    //   },
+    // );
+    // await dbInstance.close();
+  }
+
+  @override
+  void read({
+    required dbInstance,
+    required String table,
+  }) async {
+    await dbInstance.rawQuery("SELECT * FROM $table");
+    await dbInstance.close();
+  }
+
+  @override
+  void update({
+    required dbInstance,
+    required String table,
+    required Map values,
+  }) async {
+    await dbInstance.rawUpdate(
+      "UPDATE $table SET ${values.keys.join(' = ?')} WHERE id = values['id']",
+      values.values,
     );
-    await db.close();
+    await dbInstance.close();
   }
 
   @override
-  void delete() async {
-    final db = await openDB();
-    await db.rawDelete('DELETE FROM User WHERE name = ?', ['Tom']);
-    await db.close();
-  }
-
-  @override
-  void read() async {
-    final db = await openDB();
-    await db.rawQuery('SELECT * FROM User');
-    await db.close();
-  }
-
-  @override
-  void update() async {
-    final db = await openDB();
-    await db.rawUpdate(
-      'UPDATE User SET name = ?, value = ? WHERE name = ?',
-      ['Tom', '76', 'tom@gmail.com'],
-    );
-    await db.close();
+  void delete({
+    required dbInstance,
+    required String table,
+  }) async {
+    await dbInstance.rawDelete("DELETE FROM $table WHERE name = ", ['Tom']);
+    await dbInstance.close();
   }
 }

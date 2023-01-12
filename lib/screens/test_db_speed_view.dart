@@ -1,18 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-class TestDBSpeedView extends StatelessWidget {
+class TestDBSpeedView extends StatefulWidget {
   const TestDBSpeedView({
     required this.dbName,
+    required this.dbInstance,
     Key? key,
   }) : super(key: key);
 
   final String dbName;
+  final dbInstance;
+
+  @override
+  State<TestDBSpeedView> createState() => _TestDBSpeedViewState();
+}
+
+class _TestDBSpeedViewState extends State<TestDBSpeedView> {
+  DateTime? createStartTime;
+  DateTime? createEndTime;
+  // late Box? table;
+  //
+  // @override
+  // void initState() async {
+  //   _createTable();
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(dbName),
+        title: Text(widget.dbName),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -23,7 +41,9 @@ class TestDBSpeedView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _create();
+                  },
                   child: const Text('Create 100 items'),
                 ),
               ),
@@ -70,4 +90,36 @@ class TestDBSpeedView extends StatelessWidget {
       ),
     );
   }
+
+  // void _createTable() async {
+  //   await widget.dbInstance.createTable(tableName: 'users');
+  //
+  // }
+
+  void _create() async {
+    setState(() {
+      createStartTime = DateTime.now();
+    });
+
+    List<Map> userList = [];
+
+    for (var i = 1; i <= 10; i++) {
+      userList.add({
+        'name': 'Tom',
+        'age': '28',
+        'email': 'tom@gmail.com',
+      });
+    }
+
+    widget.dbInstance.insert(
+      tableName: 'users',
+      values: userList,
+    );
+
+    setState(() {
+      createEndTime = DateTime.now();
+    });
+  }
+
+  // void _read(dbInstance) {}
 }

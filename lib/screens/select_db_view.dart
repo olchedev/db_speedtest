@@ -1,8 +1,18 @@
+import 'package:db_speed/db/abstract_db_factory.dart';
 import 'package:db_speed/screens/test_db_speed_view.dart';
 import 'package:flutter/material.dart';
 
-class PickDBView extends StatelessWidget {
-  const PickDBView({Key? key}) : super(key: key);
+class SelectDBView extends StatefulWidget {
+  const SelectDBView({Key? key}) : super(key: key);
+
+  @override
+  State<SelectDBView> createState() => _SelectDBViewState();
+}
+
+class _SelectDBViewState extends State<SelectDBView> {
+  final hive = AbstractDataBaseFactory.createHiveInstance();
+  final sqflight = AbstractDataBaseFactory.createSqflightInstance();
+  final drift = AbstractDataBaseFactory.createDriftInstance();
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +31,9 @@ class PickDBView extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const TestDBSpeedView(
+                      builder: (context) => TestDBSpeedView(
                         dbName: 'Hive',
+                        dbInstance: hive,
                       ),
                     ),
                   );
@@ -36,8 +47,9 @@ class PickDBView extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const TestDBSpeedView(
+                      builder: (context) => TestDBSpeedView(
                         dbName: 'Sqflite',
+                        dbInstance: sqflight,
                       ),
                     ),
                   );
@@ -51,8 +63,9 @@ class PickDBView extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const TestDBSpeedView(
+                      builder: (context) => TestDBSpeedView(
                         dbName: 'Drift',
+                        dbInstance: drift,
                       ),
                     ),
                   );
